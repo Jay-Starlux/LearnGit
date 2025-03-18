@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="group_without_save_payment_options" model="res.groups">
+        <field name="name">Authorize.Net Direct Payment Options (Without Save Card)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="comment">Members of this group see the without save card payment options on Authorize.Net Backend Payment.</field>
+    </record>
+
+    <record id="authorize_payment_transaction_salesman_rule" model="ir.rule">
+        <field name="name">Access every payment transaction</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <record id="authorize_payment_token_salesman_rule" model="ir.rule">
+        <field name="name">Access every payment token</field>
+        <field name="model_id" ref="payment.model_payment_token"/>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <record id="payment_token_comp_rule" model="ir.rule">
+        <field name="name">Payment Token multi-company</field>
+        <field name="model_id" ref="payment.model_payment_token"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="payment_transaction_comp_rule" model="ir.rule">
+        <field name="name">Payment Transaction multi-company</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="partner_authorize_comp_rule" model="ir.rule">
+        <field name="name">Partner Authorize multi-company</field>
+        <field name="model_id" ref="authorize_net.model_res_partner_authorize"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>
