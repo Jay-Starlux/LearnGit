@@ -1,2 +1,0 @@
-# authorize_net
-
