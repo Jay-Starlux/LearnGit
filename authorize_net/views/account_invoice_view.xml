@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inherited account.invoice form -->
+    <record id="account_move_inherit" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_transactions" type="object"
+                        class="oe_stat_button" icon="fa-money"
+                        attrs="{'invisible': [('payment_tx_count', '=', 0)]}">
+                    <field name="payment_tx_count" widget="statinfo" string="Transactions"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='narration']" position="after">
+                <group string="Authorize" name="authorize">
+                    <field name="transaction_ids" widget="many2many_tags" invisible="1"/>
+                </group>
+            </xpath> -->
+            <xpath expr="//button[@name='action_register_payment']" position="attributes">
+                <attribute name="context">{'dont_redirect_to_payments': True, 'is_register_pay': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- <record id="account.action_account_invoice_from_list" model="ir.actions.server">
+        <field name="code">
+            if records:
+                action = records.with_context({'list_inv_payment': True}).action_register_payment()
+        </field>
+    </record> -->
+
+</odoo>

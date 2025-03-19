@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_authorize_refund_transaction_form" model="ir.ui.view">
+        <field name="name">authorize.refund.form</field>
+        <field name="model">authorize.refund</field>
+        <field name="arch" type="xml">
+            <form string="Authorize Refund Transaction">
+                <group col="4">
+                    <field name="partner_id" readonly="1" invisible="0"/>
+                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                </group>
+                <separator string="Credit Transaction"/>
+                <field name="auth_invoice_refund_ids" nolabel="1" widget="one2many">
+                    <tree editable="top" create="false">
+                        <field name="transaction_id" readonly="1"/>
+                        <field name="payment_token_id" readonly="1" optional="show"/>
+                        <field name="company_id" groups="base.group_multi_company" readonly="1" optional="hide"/>
+                        <field name="credit_amount" readonly="1" sum="Amount" optional="show"/>
+                        <field name="refund_amount" sum="Amount" required="1" optional="show"/>
+                        <field name="currency_id" options="{'no_open': True, 'no_create': True}" required="1"/>
+                        <field name="partner_id" optional="hide" readonly="1"/>
+                        <field name="provider_id" optional="hide" readonly="1"/>
+                        <field name="merchant_id" optional="hide" readonly="1"/>
+                        <field name="customer_profile_id" optional="hide" readonly="1"/>
+                        <field name="payment_method_id" optional="hide" readonly="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="auth_refund" type="object" string='Refund' class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_authorize_refund_transaction_view" model="ir.actions.act_window">
+        <field name="name">Authorize Refund</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">authorize.refund</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_authorize_refund_transaction_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
